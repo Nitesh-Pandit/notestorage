@@ -2,12 +2,12 @@ import React from 'react'
 import "../css/Home.css"
 export default function Home() {
     return (
-       <div style={{marginRight:"850px", display:"flex",justifyContent:"space-around"}}>
+       <div>
 
 
 
             <div class="container">
-                <aside class="sidebar" >
+                <aside class="sidebar" style={{position:"relative",right:"270px"}}>
                     <div class="container">
                         <div class="profile-container dropdown" style={{cursor: "pointer"}}>
                             <div
@@ -171,8 +171,9 @@ export default function Home() {
 
 
                 <main class="content" style={{
-                    width:"100vh",
-                    border: "1px solid"
+                    maxWidth: "100%",
+                    position:"relative",
+                    right:"150px"
                 }}>
                     <p>Get Ready to takes notes</p>
                     <h3>Sonikumari345atebac's Home</h3>
