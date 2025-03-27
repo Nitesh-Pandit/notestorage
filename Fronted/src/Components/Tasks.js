@@ -1,11 +1,10 @@
 import React from 'react'
 import "../css/Home.css"
-export default function Home() {
+import { Link } from 'react-router-dom'
+
+export default function Tasks() {
     return (
        <div>
-
-
-
             <div class="container">
                 <aside class="sidebar">
                     <div class="container">
@@ -172,13 +171,13 @@ export default function Home() {
 
                 <main class="content" style={{
                     maxWidth: "100%",
-                    
+                   
                 }}>
                     <p>Get Ready to takes notes</p>
-                    <h3>Sonikumari345atebac's Home</h3>
-                    <div class="add-note">
-                        <img src="/images/nonotes.png" alt="Note Icon" />
-                        <p><strong>No Any notes Found here!</strong></p>
+                    <h3>Sonikumari345atebac's <p className='text-danger'><b>All Taskes</b></p></h3>
+                    <div class="add-note"style={{marginTop:"35px"}}>
+                        <img src="https://cdn-icons-png.flaticon.com/256/762/762686.png" alt="Note Icon" />
+                        <p><strong>No Any Taskes Found here!</strong></p>
                     </div>
 
 
@@ -250,27 +249,23 @@ export default function Home() {
                     </div>
 
 
-                    <div class="d-flex">
-                        <div class="card border-success mb-3 mx-2" style={{maxWidth: "18rem"}}>
-                            <div class="card-header">My First Notes</div>
-                            <div class="card-body text-success">
-                                <h5 class="card-title">Success card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.</p>
-                            </div>
-                        </div>
-                        <br/>
+                    <div class="card" style={{width: "28rem"}}>
+  <img src="..." class="card-img-top" alt="..."/>
+  <div class="card-body">
+    <h5 class="card-title">Card title</h5>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">An item</li>
+    <li class="list-group-item">A second item</li>
+    <li class="list-group-item">A third item</li>
+  </ul>
+  <div class="card-body">
+    <a href="/" class="card-link">Card link</a>
+    <a href="/" class="card-link">Another link</a>
+  </div>
+</div>
 
-                            <div class="card border-success mb-3 mx-2" style={{maxWidth: "18rem"}}>
-                                <div class="card-header">Header</div>
-                                <div class="card-body text-secondary">
-                                    <h5 class="card-title">No tittle</h5>
-                                    <p class="card-text"><span class="new-note"><b>+ Click Here!</b></span> to create notes.After
-                                        Creation you can Update Delete and Edit Notes any time When you want..</p>
-                                </div>
-                            </div>
-                            <br/>
-                            </div>
                         </main>
                     </div>
        </div>

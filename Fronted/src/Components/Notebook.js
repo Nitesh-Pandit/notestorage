@@ -1,11 +1,10 @@
 import React from 'react'
 import "../css/Home.css"
-export default function Home() {
+import { Link } from 'react-router-dom'
+
+export default function NoteBook() {
     return (
        <div>
-
-
-
             <div class="container">
                 <aside class="sidebar">
                     <div class="container">
@@ -172,13 +171,13 @@ export default function Home() {
 
                 <main class="content" style={{
                     maxWidth: "100%",
-                    
+                
                 }}>
                     <p>Get Ready to takes notes</p>
-                    <h3>Sonikumari345atebac's Home</h3>
-                    <div class="add-note">
-                        <img src="/images/nonotes.png" alt="Note Icon" />
-                        <p><strong>No Any notes Found here!</strong></p>
+                    <h3>Sonikumari345atebac's <p className='text-success'><b>All The NoteBooks</b></p></h3>
+                    <div class="add-note"style={{marginTop:"35px"}}>
+                        <img src="https://cdn-icons-png.flaticon.com/512/1508/1508006.png" alt="Note Icon" />
+                        <p><strong>No Any NoteBooks Found here!</strong></p>
                     </div>
 
 

@@ -1,13 +1,12 @@
 import React from 'react'
 import "../css/Home.css"
-export default function Home() {
+import { Link } from 'react-router-dom'
+
+export default function SharedNotes() {
     return (
        <div>
-
-
-
             <div class="container">
-                <aside class="sidebar">
+                <aside class="sidebar" >
                     <div class="container">
                         <div class="profile-container dropdown" style={{cursor: "pointer"}}>
                             <div
@@ -175,10 +174,10 @@ export default function Home() {
                     
                 }}>
                     <p>Get Ready to takes notes</p>
-                    <h3>Sonikumari345atebac's Home</h3>
-                    <div class="add-note">
-                        <img src="/images/nonotes.png" alt="Note Icon" />
-                        <p><strong>No Any notes Found here!</strong></p>
+                    <h3>Sonikumari345atebac's <p className='text-danger'><b>Share List</b></p></h3>
+                    <div class="add-note"style={{marginTop:"35px"}}>
+                        <img src="https://cdn-icons-png.flaticon.com/512/9069/9069013.png" alt="Note Icon" />
+                        <p><strong>No Any Files Found here!</strong></p>
                     </div>
 
 

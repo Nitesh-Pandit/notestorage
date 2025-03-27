@@ -1,13 +1,12 @@
 import React from 'react'
 import "../css/Home.css"
-export default function Home() {
+import { Link } from 'react-router-dom'
+
+export default function Trash() {
     return (
        <div>
-
-
-
             <div class="container">
-                <aside class="sidebar">
+                <aside class="sidebar" >
                     <div class="container">
                         <div class="profile-container dropdown" style={{cursor: "pointer"}}>
                             <div
@@ -172,12 +171,13 @@ export default function Home() {
 
                 <main class="content" style={{
                     maxWidth: "100%",
-                    
+                    position:"relative",
+                    right:"150px"
                 }}>
                     <p>Get Ready to takes notes</p>
-                    <h3>Sonikumari345atebac's Home</h3>
-                    <div class="add-note">
-                        <img src="/images/nonotes.png" alt="Note Icon" />
+                    <h3>Sonikumari345atebac's <p className='text-danger'><b>Trash</b></p></h3>
+                    <div class="add-note"style={{marginTop:"35px"}}>
+                        <img src="https://cdn-icons-png.flaticon.com/512/5028/5028066.png" alt="Note Icon" />
                         <p><strong>No Any notes Found here!</strong></p>
                     </div>
 
