@@ -11,10 +11,10 @@ export default function Home() {
                     <div class="container">
                         <div class="profile-container dropdown" style={{cursor: "pointer"}}>
                             <div
-                                class="avatar"
+                                class="avatar text-sucess"
                                 id="profileDropdown"
                                 data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                                aria-expanded="false" >
                                 S
                             </div>
                             <strong>sonikumar12345abc@gmail.com</strong><br />
