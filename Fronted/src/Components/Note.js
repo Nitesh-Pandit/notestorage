@@ -136,7 +136,6 @@ export default function Note() {
                         <i class="fas fa-home"></i><a href="home.html" style={{color: "black", textDecoration: "none"}}>
                             Home</a>
                     </li>
-                    <li><i class="fas fa-calendar"></i> Calendar</li>
                     <li><i class="fas fa-sticky-note"></i> Notes</li>
                     <li><i class="fas fa-tasks"></i> Tasks</li>
                     <li><i class="fas fa-file"></i> Files</li>

@@ -165,11 +165,11 @@ export default function NotesDashboard() {
               <i className="fas fa-home"></i><Link to="/home" style={{color: "black", textDecoration: "none"}}> Home</Link>
             </li>
             <li><i className="fas fa-sticky-note"></i> Notes</li>
-            <li><i className="fas fa-tasks"></i> Tasks</li>
+            <li><i className="fas fa-tasks"></i> <Link to="/task" style={{color: "black",textDecoration:"none"}}>Tasks</Link></li>
             <li><i className="fas fa-file"></i> Files</li>
-            <li><i className="fas fa-book"></i> Notebook</li>
-            <li><i className="fas fa-share"></i> Shared with Me</li>
-            <li><i className="fas fa-trash"></i> Trash</li>
+            <li><i className="fas fa-book"></i> <Link to="/notebook" style={{color: "black",textDecoration:"none"}}>NoteBook</Link></li>
+            <li><i className="fas fa-share"></i> <Link to="/shared" style={{color: "black",textDecoration:"none"}}>Shared with Me</Link></li>
+            <li><i className="fas fa-trash"></i> <Link to="/trash" style={{color: "black",textDecoration:"none"}}>Trash</Link></li>
           </ul>
         </div>
         <div className="notebook-card">
@@ -195,7 +195,13 @@ export default function NotesDashboard() {
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg1fQdMzYmJ6ux6CDXbLAtsl4S3NARPNYVwg&s" alt="Note Icon" />
           <p><strong>It all begins with notes</strong></p>
           <p>
-            Click the <span className="new-note"><b>+ New Note</b></span> button in
+            Click the <span className="new-note"><b
+            
+            className="dropdown-item"
+            href="/"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal1"
+            ><b>+ New Note</b></b></span> button in
             the sidebar to create a note.
           </p>
         </div>
