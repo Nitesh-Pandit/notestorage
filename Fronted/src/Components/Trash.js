@@ -6,7 +6,7 @@ export default function Trash() {
     return (
        <div>
             <div class="container">
-                <aside class="sidebar" style={{position:"relative",right:"270px"}}>
+                <aside class="sidebar" >
                     <div class="container">
                         <div class="profile-container dropdown" style={{cursor: "pointer"}}>
                             <div

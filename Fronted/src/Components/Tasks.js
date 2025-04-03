@@ -6,7 +6,7 @@ export default function Tasks() {
     return (
        <div>
             <div class="container">
-                <aside class="sidebar" style={{position:"relative",right:"270px"}}>
+                <aside class="sidebar">
                     <div class="container">
                         <div class="profile-container dropdown" style={{cursor: "pointer"}}>
                             <div
@@ -171,8 +171,7 @@ export default function Tasks() {
 
                 <main class="content" style={{
                     maxWidth: "100%",
-                    position:"relative",
-                    right:"150px"
+                   
                 }}>
                     <p>Get Ready to takes notes</p>
                     <h3>Sonikumari345atebac's <p className='text-danger'><b>All Taskes</b></p></h3>
