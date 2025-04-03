@@ -36,8 +36,7 @@ export default function Main() {
     </button>
 
     <div class="overlay">
-      <p>From quick memos to detailed meeting notes, iNoteBook has you covered. Enjoy features like rich text editing,
-        tagging, cloud syncing, and offline access – all in a beautifully designed interface.</p>
+      <p>Your Notebook in cloud is safe and secure.</p>
       <Link to="/welcome" class="btn btn-primary">Start Now</Link>
     </div>
   </div>
@@ -72,8 +71,8 @@ export default function Main() {
     
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading fw-normal lh-1">First featurette heading. <span class="text-body-secondary">It’ll blow your mind.</span></h2>
-        <p class="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
+        <h2 class="featurette-heading fw-normal lh-1">Insert the notes and access it... </h2>
+        <p class="lead">Some great placeholder content for the first featurette here. </p>
       </div>
       <div class="col-md-5">
      <img src="/images/student.webp" class="d-block w-100" alt="Second slide"/>
@@ -84,7 +83,7 @@ export default function Main() {
 
     <div class="row featurette">
       <div class="col-md-7 order-md-2">
-        <h2 class="featurette-heading fw-normal lh-1">Oh yeah, it’s that good. <span class="text-body-secondary">See for yourself.</span></h2>
+        <h2 class="featurette-heading fw-normal lh-1">Update the notes and Access Anytime..... </h2>
         <p class="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
       </div>
       <div class="col-md-5 order-md-1">
@@ -97,8 +96,8 @@ export default function Main() {
 
     <div class="row featurette">
       <div class="col-md-7">
-        <h2 class="featurette-heading fw-normal lh-1">And lastly, this one. <span class="text-body-secondary">Checkmate.</span></h2>
-        <p class="lead">And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better view of what this would look like with some actual content. Your content.</p>
+        <h2 class="featurette-heading fw-normal lh-1">And lastly, this one. <span class="text-body-secondary">Delete.</span></h2>
+        <p class="lead">And yes, You can easily delete the notes related And search that notes if you want .</p>
       </div>
       <div class="col-md-5">
                      <img src="/images/carousel-2.jpg" class="d-block w-100" alt="Second slide"/>

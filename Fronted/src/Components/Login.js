@@ -1,6 +1,7 @@
 import React ,{useState}from 'react'
 import "../css/styles2.css";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 export default function Login() {
     const navigate = useNavigate();
 
@@ -79,7 +80,7 @@ export default function Login() {
        <div className="right-panel w-50 d-flex align-items-center justify-content-center text-white" style={{background: "transparent",boxShadow:"0px 0px 20px rgba(0, 0, 0, 0.2)"}}>
             <div className="form-container w-75 ">
                 <h2>Login Now</h2>
-                <p>Don't have account? <a href="login.html" className="text-warning">SignUp</a></p>
+                <p>Don't have account? <Link to="/signup" className="text-warning">SignUp</Link></p>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <input type="email" name="email" className="form-control" placeholder="Email" value={user.email} onChange={handleChange}required/>

@@ -250,7 +250,7 @@ export default function Trash() {
                     </div>
 
 
-                    <div class="d-flex">
+                    <div class="d-flex" style={{position:"relative",left:"200px"}}>
                         <div class="card border-success mb-3 mx-2" style={{maxWidth: "18rem"}}>
                             <div class="card-header">My First Notes</div>
                             <div class="card-body text-success">

@@ -195,7 +195,11 @@ export default function NotesDashboard() {
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRg1fQdMzYmJ6ux6CDXbLAtsl4S3NARPNYVwg&s" alt="Note Icon" />
           <p><strong>It all begins with notes</strong></p>
           <p>
-            Click the <span className="new-note"><b>+ New Note</b></span> button in
+         
+            Click the <span className="new-note"><a  className="dropdown-item"
+                  href="/"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1"><b>+ New Note</b></a></span> button in
             the sidebar to create a note.
           </p>
         </div>

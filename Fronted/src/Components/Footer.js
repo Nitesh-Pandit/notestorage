@@ -9,10 +9,10 @@ export default function Footer() {
             <h2>iNotebook</h2>
             <p>An E-commerce website.</p>
             <div class="social-icons">
-                <a href="#"><i class="fab fa-instagram"></i></a>
+                {/* <a href="#"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-facebook"></i></a>
                 <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a> */}
             </div>
         </div>
 
@@ -42,11 +42,59 @@ export default function Footer() {
     <div class="footer-bottom">
         <p>Need Help Customizing Your Site?</p>
         <p>Get personalized page adjustments from our expert team to make your site stand out.</p>
-        <button class="cta-button" style={{width:"180px"}}>Get in Touch</button>
+        <button class="cta-button" style={{width:"180px"}}><a  className="dropdown-item"
+                  href="/"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal1"><b style={{color:"black"}}>Get in Touch</b></a></button>
         <p>© All rights reserved. Flowfye.</p>
     </div>
 </footer>
 
+
+
+
+<div
+          className="modal fade"
+          id="exampleModal1"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                  Enter Email
+                </h1>
+                <button
+                  type="button"
+                  className="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div className="modal-body">
+                <label for="text" className="form-label">Email</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="Notebook Name"
+                  placeholder="Email........."
+                />
+              </div>
+              <div className="modal-footer">
+                {/* <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button> */}
+                <button type="button" className="btn btn-warning">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
   )
 }
