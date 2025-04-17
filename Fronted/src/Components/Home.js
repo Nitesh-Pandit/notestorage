@@ -1,6 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import moment from "moment";
 import "../css/Home.css"
 export default function Home() {
+    const [notes, setNotes] = useState([]);
+  const [notebooks, setNotebooks] = useState([]);
+
+  useEffect(() => {
+    const fetchNotes = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/notes/", {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        });
+        setNotes(res.data);
+      } catch (error) {
+        console.error("Error fetching notes:", error);
+      }
+    };
+
+    const fetchNotebooks = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/notebooks/getusernotebooks", {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        });
+        setNotebooks(res.data);
+      } catch (error) {
+        console.error("Error fetching notebooks:", error);
+      }
+    };
+
+    fetchNotes();
+    fetchNotebooks();
+  }, []);
     return (
        <div>
 
@@ -17,7 +52,7 @@ export default function Home() {
                                 aria-expanded="false" >
                                 S
                             </div>
-                            <strong>sonikumar12345abc@gmail.com</strong><br />
+                            <strong>sunil12345abc@gmail.com</strong><br />
                             <br />
                             <br />
                             <ul
@@ -175,8 +210,7 @@ export default function Home() {
                     
                 }}>
                     <p>Get Ready to takes notes</p>
-                    <h3>Sonikumari345atebac's Home</h3>
-                    <div class="add-note">
+                    <div class="add-note" style={{position:"relative",bottom:"50px"}}>
                         <img src="/images/nonotes.png" alt="Note Icon" />
                         <p><strong>No Any notes Found here!</strong></p>
                     </div>
@@ -250,27 +284,52 @@ export default function Home() {
                     </div>
 
 
-                    <div class="d-flex">
-                        <div class="card border-success mb-3 mx-2" style={{maxWidth: "18rem"}}>
-                            <div class="card-header">My First Notes</div>
-                            <div class="card-body text-success">
-                                <h5 class="card-title">Success card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.</p>
-                            </div>
-                        </div>
-                        <br/>
+                    <div className="container my-4">
+      <h3 style={{position:"relative",left:"80px",top:"-80px",width:"550px",height:"50px"}}>📒 All Notebooks</h3>
+      <div className="d-flex flex-wrap gap-3" style={{position:"relative",right:"160px",overflowY:"auto",height:"400px"}}>
+        {notebooks.map((notebook) => (
+          <div className="card p-3 shadow-sm" style={{ width: "18rem" }} key={notebook._id}>
+            <h5 className="text-success">{notebook.name}</h5>
+            <p className="text-muted">
+              Created: {moment(notebook.createdAt).format("MMM D, YYYY [at] h:mm A")}
+            </p>
+          </div>
+        ))}
+      </div>
 
-                            <div class="card border-success mb-3 mx-2" style={{maxWidth: "18rem"}}>
-                                <div class="card-header">Header</div>
-                                <div class="card-body text-secondary">
-                                    <h5 class="card-title">No tittle</h5>
-                                    <p class="card-text"><span class="new-note"><b>+ Click Here!</b></span> to create notes.After
-                                        Creation you can Update Delete and Edit Notes any time When you want..</p>
-                                </div>
-                            </div>
-                            <br/>
-                            </div>
+      <h4 className="mt-4" style={{position:"relative",left:"280px",bottom:"130px"}}>📝 All Notes</h4>
+      <div className="d-flex flex-wrap gap-3" style={{position:"relative",right:"140px",overflowY:"auto",height:"300px"}}>
+        {notes.map((note) => (
+          <div className="card p-3 shadow-sm" style={{ width: "18rem" }} key={note._id}>
+            <h5 className="text-primary">{note.title}</h5>
+
+            <div
+              className="note-preview"
+              dangerouslySetInnerHTML={{ __html: note.description }}
+              style={{ maxHeight: "200px", overflow: "hidden" }}
+            ></div>
+
+            {note.file && (
+              <div className="mt-2">
+                <strong>File:</strong> <span className="text-muted">{note.file}</span>
+              </div>
+            )}
+
+            {note.image && !note.description.includes(note.image) && (
+              <img
+                src={note.image}
+                alt="Note"
+                style={{ width: "100%", height: "auto", marginTop: "10px" }}
+              />
+            )}
+
+            <p className="text-muted mt-2" style={{ fontSize: "0.8rem" }}>
+              Created: {moment(note.createdAt).format("MMM D, YYYY [at] h:mm A")}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
                         </main>
                     </div>
        </div>

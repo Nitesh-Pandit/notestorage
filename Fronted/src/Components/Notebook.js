@@ -1,8 +1,66 @@
-import React from 'react'
-import "../css/Home.css"
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import "../css/Home.css";
+import { useNavigate } from "react-router-dom";
 
 export default function NoteBook() {
+  const [notebooks, setNotebooks] = useState([]);
+  const navigate = useNavigate(); // ✅ 1. Initialize useNavigate
+
+  // ✅ 2. Fetch all notebooks
+  const fetchNotebooks = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/notebooks/getusernotebooks", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to fetch");
+      setNotebooks(data);
+    } catch (error) {
+      console.error("Error fetching notebooks:", error);
+    }
+  };
+
+  // ✅ 3. Trash notebook
+  const handleTrashNotebook = async (id) => {
+    const confirmTrash = window.confirm("Do you want to move this notebook to Trash?");
+    if (!confirmTrash) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/trash/trash/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
+
+      if (!res.ok) throw new Error("Failed to trash notebook");
+
+      const trashedNotebook = await res.json();
+      console.log("Trashed notebook: ", trashedNotebook);
+
+      setNotebooks((prev) => prev.filter((n) => n._id !== id));
+    } catch (error) {
+      console.error("Error trashing notebook:", error);
+    }
+  };
+
+  // ✅ 4. Handle notebook click
+  const handleOpenNotebook = (notebook) => {
+    navigate("/notesDashboard", { state: { notebook } }); // 👈 navigate with notebook
+  };
+
+  useEffect(() => {
+    fetchNotebooks();
+  }, []);
+      
+
+
     return (
        <div>
             <div class="container">
@@ -16,9 +74,10 @@ export default function NoteBook() {
                                 aria-expanded="false">
                                 S
                             </div>
-                            <strong>sonikumar12345abc@gmail.com</strong><br />
+                            <strong>sunil12345abc@gmail.com</strong><br />
                             <br />
                             <br />
+                            
                             <ul
                                 class="dropdown-menu dropdown-menu-end"
                                 aria-labelledby="profileDropdown"
@@ -152,12 +211,7 @@ export default function NoteBook() {
                             <li><i class="fas fa-share"></i> Shared with Me</li>
                             <li><i class="fas fa-trash"></i> Trash</li>
 
-                            {/* <!--
-                <li><i class="fas fa-th-large"></i> Templates</li>
-                <li><i class="fas fa-tags"></i> Tags</li>
-                <li><i class="fas fa-star"></i> Shortcuts</li>
-                <li><i class="fas fa-users"></i> Spaces</li>
-                --> */}
+                   
                         </ul>
                     </div>
                     <div class="notebook-card">
@@ -174,10 +228,16 @@ export default function NoteBook() {
                 
                 }}>
                     <p>Get Ready to takes notes</p>
-                    <h3>Sonikumari345atebac's <p className='text-success'><b>All The NoteBooks</b></p></h3>
+                    <h3> <p className='text-success'><b>All The NoteBooks</b></p></h3>
                     <div class="add-note"style={{marginTop:"35px"}}>
                         <img src="https://cdn-icons-png.flaticon.com/512/1508/1508006.png" alt="Note Icon" />
-                        <p><strong>No Any NoteBooks Found here!</strong></p>
+                        <p>
+                            <strong>
+                                {notebooks.length === 0
+                                ? "No Any NoteBooks Found here!"
+                                : `Total Notebooks: ${notebooks.length}`}
+                            </strong>
+                            </p>
                     </div>
 
 
@@ -249,27 +309,51 @@ export default function NoteBook() {
                     </div>
 
 
-                    <div class="d-flex">
-                        <div class="card border-success mb-3 mx-2" style={{maxWidth: "18rem"}}>
-                            <div class="card-header">My First Notes</div>
-                            <div class="card-body text-success">
-                                <h5 class="card-title">Success card title</h5>
-                                <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                                    the card's content.</p>
-                            </div>
-                        </div>
-                        <br/>
+                    <div className="d-flex flex-wrap">
+      {notebooks.map((notebook) => (
+        <div
+          key={notebook._id}
+          className="card border-success mb-3 mx-2"
+          style={{ maxWidth: "18rem" , cursor: "pointer" }}
+        >
+          <div className="card-header" onClick={() => handleOpenNotebook(notebook)} >{notebook.name}</div>
+          <div className="card-body text-success">
+            <h5 className="card-title">Success card title</h5>
+            <p className="card-text">
+              Some quick example text to build on the card title and make up the
+              bulk of the card's content.
+            </p>
+            <button
+                className="btn btn-outline-danger btn-sm"
+                onClick={(e) => {
+                  e.stopPropagation(); // prevent triggering notebook open
+                  handleTrashNotebook(notebook._id);
+                }}
+              >
+                Delete
+              </button>
+          </div>
+        </div>
+      ))}
 
-                            <div class="card border-success mb-3 mx-2" style={{maxWidth: "18rem"}}>
-                                <div class="card-header">Header</div>
-                                <div class="card-body text-secondary">
-                                    <h5 class="card-title">No tittle</h5>
-                                    <p class="card-text"><span class="new-note"><b>+ Click Here!</b></span> to create notes.After
-                                        Creation you can Update Delete and Edit Notes any time When you want..</p>
-                                </div>
-                            </div>
-                            <br/>
-                            </div>
+      {/* Static card to prompt new notebook */}
+      <div
+        className="card border-success mb-3 mx-2"
+        style={{ maxWidth: "18rem" }}
+      >
+        <div className="card-header">Header</div>
+        <div className="card-body text-secondary">
+          <h5 className="card-title">No title</h5>
+          <p className="card-text">
+            <span className="new-note">
+              <b>+ Click Here!</b>
+            </span>{" "}
+            to create notes. After Creation you can Update, Delete, and Edit notes
+            anytime you want.
+          </p>
+        </div>
+      </div>
+    </div>
                         </main>
                     </div>
        </div>
