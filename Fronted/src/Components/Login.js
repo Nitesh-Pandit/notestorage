@@ -2,14 +2,8 @@ import React, { useState } from "react";
 import "../css/styles2.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { auth, googleProvider, facebookProvider } from "./firebase";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  signInWithPopup,
-  fetchSignInMethodsForEmail
-} from "firebase/auth";
+import { auth, googleProvider, facebookProvider } from "./firebase"; // import from frontend/firebase.js
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -74,32 +68,18 @@ export default function Login() {
   };
 
   const handleFacebookLogin = async () => {
-    const auth = getAuth();
-    const provider = new FacebookAuthProvider();
-    provider.addScope('email');
-  
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-  
-      console.log("Facebook login result:", result);
-      console.log("Retrieved email from Facebook:", user.email);
-  
-      localStorage.setItem("userInfo", JSON.stringify({
-        displayName: result.user.displayName,
-        email: result.user.email || "Email not available", // fallback
-      }));  
-  
+      localStorage.setItem("userInfo", JSON.stringify({ user: { firstName: user.displayName.split(" ")[0], lastName: user.displayName.split(" ")[1], email: user.email } }));
       alert("Logged in with Facebook!");
       navigate("/notesDashboard");
+  
     } catch (error) {
       console.error("Facebook Login Error:", error);
       alert("Facebook login failed.");
     }
   };
-  
-  
-  
 
   return (
     <div>
