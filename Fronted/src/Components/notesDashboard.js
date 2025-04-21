@@ -17,7 +17,7 @@ export default function NotesDashboard() {
   const [fileData, setFileData] = useState("");
   const [noteTitles, setNoteTitles] = useState([]);
   const [files, setFiles] = useState([]);
-
+  const [notebookNotes, setNotebookNotes] = useState([]);
   //For Task
   const [taskName, setTaskName] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
@@ -146,6 +146,7 @@ export default function NotesDashboard() {
       console.error(error);
     }
   };
+  
 
   const handleSaveNote = async () => {
     if (!selectedNote) {
@@ -177,6 +178,7 @@ export default function NotesDashboard() {
       console.log("📦 Raw response text:", responseText); // 🧾 LOG IT
 
       // Try to parse manually if you want to confirm it's valid JSON
+      
       try {
         const result = JSON.parse(responseText);
         alert("✅ Note saved successfully!");
@@ -251,18 +253,27 @@ export default function NotesDashboard() {
   const [userInfo, setUserInfo] = useState(null);
   const editorRef = useRef(null);
   const quillInstance = useRef(null);
-
   useEffect(() => {
     const storedUser = localStorage.getItem("userInfo");
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
-        setUserInfo(parsedUser);
+  
+        // Clean fallback for email and name
+        const cleanedUser = {
+          displayName: parsedUser.displayName || "Unknown User",
+          email: parsedUser.email && parsedUser.email.includes("@")
+            ? parsedUser.email
+            : "niteshpandit013@gmail.com",
+        };
+  
+        setUserInfo(cleanedUser);
       } catch (error) {
         console.error("Failed to parse user info from localStorage:", error);
       }
     }
   }, []);
+  
 
   const name =
     userInfo?.displayName ||
@@ -331,6 +342,40 @@ export default function NotesDashboard() {
     }
   }, [name, email]); // 🔁 Runs again if name/email changes
 
+
+  useEffect(() => {
+    const fetchNotebookNotes = async () => {
+      if (!notebook?._id) return;
+  
+      try {
+        const res = await fetch(`http://localhost:5000/api/notes/notebook/${notebook._id}`, {
+          headers: {
+            "auth-token": localStorage.getItem("token"),
+          },
+        });
+  
+        const data = await res.json();
+        setNotebookNotes(data); // <-- state that holds notes
+      } catch (error) {
+        console.error("Failed to fetch notes:", error);
+      }
+    };
+  
+    fetchNotebookNotes();
+  }, [notebook]);
+  
+
+  //Providing the style on image when notesbook is click then all the card with proper image is appear
+  useEffect(() => {
+    const images = document.querySelectorAll('.note-description img');
+    images.forEach((img) => {
+      img.style.maxWidth = '100%';
+      img.style.height = 'auto';
+      img.style.borderRadius = '8px';
+      img.style.marginTop = '10px';
+    });
+  }, [notebookNotes]);
+  
   return (
     <div style={{ marginRight: "200px" }}>
       <div className="container">
@@ -640,11 +685,16 @@ export default function NotesDashboard() {
                       <b style={{ color: "green" }}>+ New Note</b>
                     </a>
                   </p>
-                  {noteTitles.map((note) => (
-                    <li key={note._id} style={{ fontSize: "0.9rem" }}>
-                      {note.title}
-                    </li>
-                  ))}
+                              {Array.isArray(noteTitles) ? (
+              noteTitles.map((note) => (
+                <li key={note._id} style={{ fontSize: "0.9rem" }}>
+                  {note.title}
+                </li>
+              ))
+            ) : (
+              <li style={{ fontSize: "0.9rem", color: "gray" }}>No notes available</li>
+            )}
+
                 </ul>
               </li>
 
@@ -661,57 +711,62 @@ export default function NotesDashboard() {
               <li>
                 <i className="fas fa-file"></i> Files
                 <ul style={{ listStyleType: "none", paddingLeft: "20px" }}>
-                  {files.map((item, index) => (
-                    <li
-                      key={index}
-                      style={{
-                        margin: "8px 0",
-                        padding: "5px",
-                        borderRadius: "5px",
-                        transition: "background-color 0.2s",
-                      }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.backgroundColor = "#f0f0f0")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.backgroundColor = "transparent")
-                      }
-                    >
-                      {/* File link */}
-                      {item.file && (
-                        <a
-                          href={item.file}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ color: "#007bff", textDecoration: "none" }}
-                        >
-                          {item.file.split("/").pop()}
-                        </a>
-                      )}
+                {Array.isArray(files) ? (
+  files.map((item, index) => (
+    <li
+      key={index}
+      style={{
+        margin: "8px 0",
+        padding: "5px",
+        borderRadius: "5px",
+        transition: "background-color 0.2s",
+      }}
+      onMouseEnter={(e) =>
+        (e.currentTarget.style.backgroundColor = "#f0f0f0")
+      }
+      onMouseLeave={(e) =>
+        (e.currentTarget.style.backgroundColor = "transparent")
+      }
+    >
+      {/* File link */}
+      {item.file && (
+        <a
+          href={item.file}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#007bff", textDecoration: "none" }}
+        >
+          {item.file.split("/").pop()}
+        </a>
+      )}
 
-                      {/* Image link */}
-                      {item.image && (
-                        <a
-                          href={item.image}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{ display: "block", marginTop: "5px" }}
-                        >
-                          <img
-                            src={item.image}
-                            alt="Uploaded"
-                            style={{
-                              width: "100px",
-                              height: "auto",
-                              borderRadius: "5px",
-                              border: "1px solid #ddd",
-                              boxShadow: "1px 1px 5px rgba(0,0,0,0.1)",
-                            }}
-                          />
-                        </a>
-                      )}
-                    </li>
-                  ))}
+      {/* Image link */}
+      {item.image && (
+        <a
+          href={item.image}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ display: "block", marginTop: "5px" }}
+        >
+          <img
+            src={item.image}
+            alt="Uploaded"
+            style={{
+              width: "100px",
+              height: "auto",
+              borderRadius: "5px",
+              border: "1px solid #ddd",
+              boxShadow: "1px 1px 5px rgba(0,0,0,0.1)",
+            }}
+          />
+        </a>
+      )}
+    </li>
+  ))
+) : (
+  <li style={{ fontSize: "0.9rem", color: "gray" }}>No files available</li>
+)}
+
                 </ul>
               </li>
 
@@ -856,6 +911,41 @@ export default function NotesDashboard() {
               ))}
             </div>
           )}
+          <div className="note-cards d-flex flex-wrap gap-3 mt-3">
+  {notebookNotes.map((note) => (
+    <div
+      key={note._id}
+      className="card p-3 shadow-sm"
+      style={{ width: "18rem", cursor: "pointer" }}
+      onClick={() => {
+        setSelectedNote(note);
+        setIsEditorEnabled(true);
+      }}
+    >
+      <div className="card-header text-primary">
+        <h5 className="mb-0">{note.title || "Untitled"}</h5>
+      </div>
+
+      <div className="card-body">
+        {/* Description with HTML content including image(s) */}
+        <div
+          className="card-text note-description"
+          style={{
+    overflow: "hidden",
+  }}
+          dangerouslySetInnerHTML={{ __html: note.description }}
+        />
+      </div>
+
+      <div className="card-footer">
+        <small className="text-muted">
+          {new Date(note.createdAt).toLocaleDateString()}
+        </small>
+      </div>
+    </div>
+  ))}
+</div>
+
         </main>
 
         {/* ✅ Hidden Inputs Here */}
@@ -878,12 +968,16 @@ export default function NotesDashboard() {
           <div className="rich-text-container">
             <h2 style={{ textAlign: "center" }}>Write Your Notes</h2>
             <input
-              type="text"
-              className="note-title"
-              placeholder="Enter Title..."
-              value={selectedNote?.name || ""}
-              readOnly
-            />
+          type="text"
+          className="note-title"
+          placeholder="Enter Title..."
+          value={selectedNote?.title || ""}
+          onChange={(e) =>
+            setSelectedNote({ ...selectedNote, title: e.target.value })
+          }
+          readOnly={!isEditorEnabled}
+        />
+
             <div
               id="toolbar"
               style={{
@@ -1078,7 +1172,7 @@ export default function NotesDashboard() {
                     className="btn btn-warning"
                     onClick={() => {
                       if (noteName.trim()) {
-                        setNotes((prev) => [...prev, { name: noteName }]);
+                        setNotes((prev) => [...prev, { title: noteName ,description: null,createdAt:new Date()}]);
                         setNoteName(""); // clear input
                         document.getElementById("closeModalBtn").click(); // close modal
                       }

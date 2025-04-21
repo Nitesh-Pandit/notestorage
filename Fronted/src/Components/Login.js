@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import "../css/styles2.css";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { auth, googleProvider, facebookProvider } from "./firebase"; // import from frontend/firebase.js
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, googleProvider, facebookProvider } from "./firebase";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  signInWithPopup,
+  fetchSignInMethodsForEmail
+} from "firebase/auth";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -18,12 +24,6 @@ export default function Login() {
     }));
   };
 
-
-
-
-
-
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -57,15 +57,14 @@ export default function Login() {
   const handleGoogleLogin = async () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
-  
+
     try {
       const result = await signInWithPopup(auth, provider);
-      // Set user info in localStorage
       localStorage.setItem("userInfo", JSON.stringify({
         displayName: result.user.displayName,
         email: result.user.email
       }));
-  
+
       alert("Google login successful!");
       navigate("/notesDashboard");
     } catch (error) {
@@ -75,10 +74,22 @@ export default function Login() {
   };
 
   const handleFacebookLogin = async () => {
+    const auth = getAuth();
+    const provider = new FacebookAuthProvider();
+    provider.addScope('email');
+  
     try {
-      const result = await signInWithPopup(auth, facebookProvider);
+      const result = await signInWithPopup(auth, provider);
       const user = result.user;
-      localStorage.setItem("userInfo", JSON.stringify({ user: { firstName: user.displayName.split(" ")[0], lastName: user.displayName.split(" ")[1], email: user.email } }));
+  
+      console.log("Facebook login result:", result);
+      console.log("Retrieved email from Facebook:", user.email);
+  
+      localStorage.setItem("userInfo", JSON.stringify({
+        displayName: result.user.displayName,
+        email: result.user.email || "Email not available", // fallback
+      }));  
+  
       alert("Logged in with Facebook!");
       navigate("/notesDashboard");
     } catch (error) {
@@ -86,6 +97,9 @@ export default function Login() {
       alert("Facebook login failed.");
     }
   };
+  
+  
+  
 
   return (
     <div>

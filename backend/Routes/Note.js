@@ -156,7 +156,6 @@ router.delete('/delete/:id', fetchuser, async (req, res) => {
 });
 
 //Sharing the email for notes
-
 router.post('/share', fetchuser, async (req, res) => {
   const { email, title, description, createdAt } = req.body;
 
@@ -201,6 +200,22 @@ router.post('/share', fetchuser, async (req, res) => {
     res.status(500).json({ success: false, error: "Failed to send email or save note" });
   }
   
+});
+
+// In /Routes/Note.js// Get notes for a specific notebook
+router.get('/notebook/:id', fetchuser, async (req, res) => {
+  try {
+    const notes = await Note.find({
+      user: req.user.id,
+      notebookId: req.params.id,
+      trashed: false,
+    }).sort({ createdAt: -1 });
+
+    res.json(notes);
+  } catch (err) {
+    console.error("Error fetching notes for notebook:", err.message);
+    res.status(500).json({ error: "Server error while fetching notes" });
+  }
 });
 
 

@@ -7,18 +7,22 @@ export default function SharedNotes() {
   useEffect(() => {
     const fetchSharedNotes = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/notes/shared", {
+        const res = await fetch("http://localhost:5000/api/shared/shared", {
           headers: {
             "auth-token": localStorage.getItem("token"),
           },
         });
-
-        const data = await res.json();
+    
+        const text = await res.text(); // Get raw text
+        console.log("Raw response text:", text);
+    
+        const data = JSON.parse(text); // Try to parse
         setSharedNotes(data);
       } catch (error) {
         console.error("Error fetching shared notes:", error);
       }
     };
+    
 
     fetchSharedNotes();
   }, []);

@@ -130,11 +130,7 @@ export default function Signup() {
             <button type="button" className="btn btn-warning w-100" onClick={handleSubmit}>Create account</button>
 
           </form>
-          <div className="text-center mt-3">Or register with</div>
-          <div className="d-flex justify-content-between mt-3">
-            <button className="btn btn-light w-48"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQiufjMBMPwlCuWDLiEEd_e9Z6jHGRi8kP7oA&s" width="20" alt='google' /> Google</button>
-            <button className="btn btn-light w-48"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" width="20" alt="Facebook" /> Facebook</button>
-          </div>
+         
         </div>
       </div>
     </div>
